@@ -41,6 +41,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
          */
         Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+        Route::get('/dashboard/addnews', 'NewsController@index')->name('news.create');
+        Route::post('/dashboard/addnews', 'NewsController@add')->name('news.add');
+        Route::get('/dashboard/editnews/{id}', 'NewsController@edit')->name('news.edit');
+        Route::get('/dashboard/deletenews/{id}', 'NewsController@delete')->name('news.delete');
+        Route::post('/dashboard/editnews/{id}', 'NewsController@update')->name('news.update');
+
 
     });
 });

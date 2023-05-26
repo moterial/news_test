@@ -48,16 +48,31 @@
 
 
 @auth
-<!-- ======= Footer ======= -->
-<footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NewsAdmin</span></strong>. All Rights Reserved
-    </div>
-    
-</footer><!-- End Footer -->
+
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 @endauth
-  
+
+@if(session()->has('message'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id='alertBox'>
+    <strong>Success!</strong> {{ session()->get('message') }}
+    
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+    </div>
+  </div>
+@endif
+
+@if(session()->has('error'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" id='alertBox'>
+    <strong>Error!</strong> {{ session()->get('error') }}
+    
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color:red!important"></div>
+    </div>
+  </div>
+@endif
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
@@ -75,3 +90,28 @@
 </body>
 
 </html>
+
+<script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
+<script>
+  $(document).ready(function() {
+    setTimeout(function() {
+      $('#alertBox').fadeOut('slow');
+    }, 2000);
+
+    //progress-bar load from 100% to 0% in 4 seconds smoothly
+    var progress = setInterval(function() {
+      var $bar = $('.progress-bar');
+      if ($bar.width() >= 0) {
+        $bar.width($bar.width() - 200);
+      } else {
+        clearInterval(progress);
+        
+
+      }
+    }, 1);
+
+
+
+    
+  });
+</script>

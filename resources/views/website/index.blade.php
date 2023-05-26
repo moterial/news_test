@@ -44,7 +44,27 @@
                         </div>
                     </div>
                       
-              </div>
+                </div>
+                @foreach($news as $new)
+                <div class="post-content">
+                  <div class="post-title"><a href="/press-release/detail?id=64">{{$new->title}}</a></div>
+                  <div class="post-display_at">{{$new->updated_at}}</div>
+                  <div class="row">
+                    <div class="col-sm-8 col-sm-pull-4 col-lg-9 col-lg-pull-3 mt-1">
+                      <div class="post-summary">
+                        <p>{{$new->content}}</p>
+                        <div class="post-more"><a href="/press-release/detail?id=64">詳情</a></div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4 col-sm-push-8 col-lg-3 col-lg-push-9 mt-1" id="post-image">
+                        <div class="post-image mb-3">
+                          <a href="/press-release/detail?id=64"><img src="{{ asset('uploads/'.$new->image) }}" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                @endforeach
                 
               </div>
             </div>

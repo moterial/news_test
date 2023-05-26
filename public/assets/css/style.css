@@ -1082,3 +1082,23 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.alert{
+  position: absolute!important;
+  top: 62px!important;
+  right: 0!important;
+  width: 350px!important;
+  /* background-color: rgba(0,0,0,0.5); */
+  z-index: 9999;
+}
+
+.progress {
+  margin-bottom: 0 !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  width: 100% !important;
+  height: 5px !important;
+  position: absolute;
+  border-radius: 0;
+}
+
