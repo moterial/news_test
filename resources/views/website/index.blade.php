@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <div class="main-content ">
+    <div class="main-content" style="margin-bottom: 10%">
         <div class="row">
             <div class="col-3" >
               <ul class="page-left-menu d-none d-md-block">
@@ -26,7 +26,7 @@
             <div class="col-md-9 col-12">
               <p class="title">新聞發佈</p>
               <div class="row">
-                <div class="post-content">
+                {{-- <div class="post-content">
                     <div class="post-title"><a href="/press-release/detail?id=64">樂善堂過渡性房屋「樂屋」 - 彩虹彩興路動土禮</a></div>
                     <div class="post-display_at">2023年05月16日</div>
                     <div class="row">
@@ -44,27 +44,32 @@
                         </div>
                     </div>
                       
-                </div>
-                @foreach($news as $new)
-                <div class="post-content">
-                  <div class="post-title"><a href="/press-release/detail?id=64">{{$new->title}}</a></div>
-                  <div class="post-display_at">{{$new->updated_at}}</div>
-                  <div class="row">
-                    <div class="col-sm-8 col-sm-pull-4 col-lg-9 col-lg-pull-3 mt-1">
-                      <div class="post-summary">
-                        <p>{{$new->content}}</p>
-                        <div class="post-more"><a href="/press-release/detail?id=64">詳情</a></div>
-                      </div>
-                    </div>
+                </div> --}}
+                @foreach($news as $key => $new)
+                  <div class="post-content">
+                    <div class="post-title"><a href="/press-release/detail?id=64">{{$new['title']}}</a></div>
+                    <div class="post-display_at">{{$new['updated_at']}}</div>
+                    <div class="row">
+                      <div class="col-sm-8 col-sm-pull-4 col-lg-9 col-lg-pull-3 mt-1">
+                        <div class="post-summary">
+                          <p style="white-space: pre-wrap;">{{
+                              //first 100 characters of json_decode($new->content)
+                              substr(json_decode($new['content']), 0, 400)
 
-                    <div class="col-sm-4 col-sm-push-8 col-lg-3 col-lg-push-9 mt-1" id="post-image">
-                        <div class="post-image mb-3">
-                          <a href="/press-release/detail?id=64"><img src="{{ asset('uploads/'.$new->image) }}" alt=""></a>
+                            }}....</p>
+                          <div class="post-more"><a href="/press-release/detail?id=64">詳情</a></div>
                         </div>
-                    </div>
-                </div>
-                </div>
+                      </div>
+
+                      <div class="col-sm-4 col-sm-push-8 col-lg-3 col-lg-push-9 mt-1" id="post-image">
+                          <div class="post-image mb-3">
+                            <a href="/press-release/detail?id=64"><img src="{{ asset('uploads/'.$new['image'][0]) }}" alt=""></a>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
                 @endforeach
+
                 
               </div>
             </div>

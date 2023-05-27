@@ -27,7 +27,7 @@
                       <h5 class="card-title">Add news Form </h5>
         
                       <!-- General Form Elements -->
-                      <form method="post" action="{{ route('news.add') }}" enctype="multipart/form-data" >
+                      <form method="post" action="{{ route('news.add') }}" enctype="multipart/form-data" id="createForm">
                         @csrf
                         <div class="row mb-3">
                           <label for="inputText" class="col-sm-2 col-form-label">Title</label>
@@ -39,20 +39,24 @@
                         <div class="row mb-3">
                           <label for="inputNumber" class="col-sm-2 col-form-label">Image Upload</label>
                           <div class="col-sm-10">
-                            <input class="form-control" type="file" name='image' id="formFile" accept=".png, .jpg, .jpeg">
-                            <img src="" alt="" width="100px" id="preview-image">
+                            <input class="form-control" type="file" name='image[]' id="formFile" accept=".png, .jpg, .jpeg" multiple>
+                            {{-- <img src="" alt="" width="100px" id="preview-image"> --}}
+                            <div id="preview-image"></div>
                           </div>
                         </div>
 
 
-                        <div class="row mb-3">
+                        <div class="row">
                           <label for="inputPassword" class="col-sm-2 col-form-label">Content</label>
                           <div class="col-sm-10">
-                            <textarea class="form-control" style="height: 100px" name="content"></textarea>
+                            {{-- <textarea class="form-control" style="height: 100px" name="content"></textarea> --}}
+                            <div class="editor">
+                            </div>
+                            <input type="hidden" name="content" id="content">
                           </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-3 mt-5">
                             <label for="inputText" class="col-sm-2 col-form-label">Youtube link</label>
                             <div class="col-sm-10">
                               <input type="text" class="form-control" name="link">
@@ -126,9 +130,34 @@
     $('#formFile').change(function(e) {
         //change the preview image
         $('#preview-image').attr('src', URL.createObjectURL(e.target.files[0]));
+        //display multiple images
+        for (var i = 0; i < e.target.files.length; i++) {
+            var image = $('<img>').attr('src', URL.createObjectURL(e.target.files[i])).addClass('img-fluid');
+            image.attr('width', '150px');
+            $('#preview-image').append(image);
+        }
     });
     $('#addNews').click(function() {
       window.location.href = "{{ route('news.create') }}";
+    })
+
+    var quill = new Quill('.editor', {
+      theme: 'snow',
+      //hide the default toolbar
+        modules: {
+            toolbar: false
+        },
+    });
+
+    $('#createForm').submit(function(e) {
+      e.preventDefault();
+      var content = quill.getContents();
+      var text = content.ops.map(function(item) {
+            return item.insert;
+        }).join('');
+      var decoded = JSON.stringify(text);
+      $('#content').val(decoded);
+      this.submit();
     })
   });
 </script>

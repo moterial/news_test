@@ -6,7 +6,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Add News</h1>
+      <h1>Edit News</h1>
 
     </div><!-- End Page Title -->
 
@@ -24,16 +24,16 @@
         
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">Add news Form </h5>
+                      <h5 class="card-title">Edit news Form </h5>
         
                       <!-- General Form Elements -->
-                      <form method="post" action="{{ route('news.update',$news->id)}}" enctype="multipart/form-data" >
+                      <form method="post" action="{{ route('news.update',$news[0]->id)}}" enctype="multipart/form-data" id="editForm">
                         @csrf
                         <div class="row mb-3">
                           <label for="inputText" class="col-sm-2 col-form-label">Title</label>
                           <div class="col-sm-10">
                             @isset($news)
-                                <input type="text" class="form-control" name="title" value="{{ $news->title }}">     
+                                <input type="text" class="form-control" name="title" value="{{ $news[0]->title }}">     
                             @else
                                 <input type="text" class="form-control" name="title">
                             @endisset
@@ -44,8 +44,13 @@
                           <label for="inputNumber" class="col-sm-2 col-form-label">Image Upload</label>
                           <div class="col-sm-10">
                             @isset($news)
-                                <input class="form-control" type="file" name='image' id="formFile" accept=".png, .jpg, .jpeg" value="{{$news->image}}">
-                                <img src="{{ asset('uploads/'.$news->image) }}" alt="" width="100px" id="preview-image">
+                                <input class="form-control" type="file" name='image' id="formFile" accept=".png, .jpg, .jpeg" value="">
+                                <div id="preview-image">
+                                    @foreach ($news[0]->image as $image)
+                                        <img src="{{ asset('uploads/'.$image) }}" alt="" width="100px">
+                                    @endforeach
+
+                                </div>
                             @else
                                 <input class="form-control" type="file" name='image' id="formFile" accept=".png, .jpg, .jpeg">
                             @endisset
@@ -53,22 +58,26 @@
                         </div>
 
 
-                        <div class="row mb-3">
+                        <div class="row ">
                           <label for="inputPassword" class="col-sm-2 col-form-label">Content</label>
                           <div class="col-sm-10">
                             @isset($news)
-                                <textarea class="form-control" style="height: 100px" name="content">{{ $news->content }}</textarea>
+                                {{-- <textarea class="form-control" style="height: 100px" name="content"></textarea> --}}
+                                <div class="editor"></div>
+                                <input type="hidden" name="content" id="content" value="{{$news[0]->content}}">
                             @else
-                                <textarea class="form-control" style="height: 100px" name="content"></textarea>
+                                {{-- <textarea class="form-control" style="height: 100px" name="content"></textarea> --}}
+                                <div class="quill-editor-default"></div>
+                                <input type="hidden" name="content" id="content">
                             @endisset
                           </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-3 mt-5">
                             <label for="inputText" class="col-sm-2 col-form-label">Youtube link</label>
                             <div class="col-sm-10">
                                 @isset($news)
-                                    <input type="text" class="form-control" name="link" value="{{ $news->link }}">
+                                    <input type="text" class="form-control" name="link" value="{{ $news[0]->link }}">
                                 @else
                                     <input type="text" class="form-control" name="link">
                                 @endisset
@@ -81,7 +90,7 @@
                             <div class="form-check">
                               
                               @isset($news)
-                                @if($news->is_publish==1)
+                                @if($news[0]->is_publish==1)
                                     <input class="form-check-input" type="radio" name="publish" id="gridRadios1" value='yes' checked>
                                 @else
                                 <input class="form-check-input" type="radio" name="publish" id="gridRadios1" value='yes'>
@@ -97,7 +106,7 @@
                             </div>
                             <div class="form-check">
                                 @isset($news)
-                                @if($news->is_publish==0)
+                                @if($news[0]->is_publish==0)
                                     <input class="form-check-input" type="radio" name="publish" id="gridRadios2" value='no' checked>
                                 @else
                                 <input class="form-check-input" type="radio" name="publish" id="gridRadios2" value='no'>
@@ -156,6 +165,7 @@
 @endsection
 
 <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/quill/quill.min.js')}}"></script>
 <script>
   $(document).ready(function() {
 
@@ -164,12 +174,38 @@
         $('#preview-image').attr('src', URL.createObjectURL(e.target.files[0]));
     });
 
+    var quill = new Quill('.editor', {
+        theme: 'snow'
+    });
+
+    console.log(quill);
+    //insert HTML into editor
+    var content = $('#content').val();
+    //json decode the content
+    var decoded = JSON.parse(content);
+    console.log(decoded);
+    //change the \n to <br>
+    // var replaced = decoded.replace(/\n/g, "<br />");
+    quill.insertText(0, decoded);
 
 
+    $('#editForm').submit(function(e) {
+    e.preventDefault();
+      var content = quill.getContents();
+      var text = content.ops.map(function(item) {
+            return item.insert;
+        }).join('');
+      var decoded = JSON.stringify(text);
+      $('#content').val(decoded);
+      this.submit();
 
+    })
 
-    
   });
+</script>
+
+<script>
+
 </script>
 
   

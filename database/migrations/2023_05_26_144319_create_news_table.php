@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('content')->nullable();
-            $table->string('image')->nullable();
+            // $table->string('image')->nullable();
+            // $table->string('image2')->nullable();
+            // $table->string('image3')->nullable();
+            // $table->string('image4')->nullable();
+            // $table->string('image5')->nullable();
+            // $table->string('image5')->nullable();
             $table->string('link')->nullable();
             $table->boolean('is_publish')->default(false);
             $table->string('author')->nullable();

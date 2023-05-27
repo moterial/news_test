@@ -15,7 +15,7 @@ class RegisterController extends Controller
      */
     public function show()
     {
-        return view('auth.register');
+        return view('cms.register');
     }
 
     /**
@@ -31,6 +31,6 @@ class RegisterController extends Controller
 
         auth()->login($user);
 
-        return redirect('/')->with('success', "Account successfully registered.");
+        return redirect('/dashboard')->with('success', "Account successfully registered.");
     }
 }
