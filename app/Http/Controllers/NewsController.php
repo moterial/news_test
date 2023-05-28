@@ -100,21 +100,34 @@ class NewsController extends Controller
     public function update(Request $request, $id){
 
 
-        $news = News::find($id);
+        $news = new News;
         $news->title = $request->title;
         $news->content = $request->content;
         $news->author = $request->author;
-        if($request->image){
-            $destinationPath = 'uploads';
-            $myimage = time().$request->image->getClientOriginalName();
-            $path = $request->image->move(public_path($destinationPath), $myimage);
-            $news->image = $myimage;
-        }else{
-            $news->image = $news->image;
-        }
         $news->link = $request->link;
         $news->is_publish = $request->publish?true:false;
+
         $news->save();
+        if($request->image){
+            //delete the old image record
+            $images = DB::table('images')
+            ->where('news_id', $id)
+            ->delete();
+
+            foreach ($request->image as $image) {
+                $images = new Images;
+                $destinationPath = 'uploads';
+                $myimage = time().$image->getClientOriginalName();
+                $path = $image->move(public_path($destinationPath), $myimage);
+                $images->image_path = $myimage;
+                $images->news_id = $id;
+                $images->save();
+                
+            }
+        }else{
+            
+        }
+
 
         // //redirect back to the page call index()
         return redirect()->route('dashboard.index')->with('message', 'News edited successfully');

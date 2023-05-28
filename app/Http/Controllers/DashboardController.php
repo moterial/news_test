@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class DashboardController extends Controller
@@ -34,5 +35,60 @@ class DashboardController extends Controller
         // dd($news);
         
         return view('cms.index', compact('news'));
+    }
+
+    public function profile()
+    {   
+        //get the user id from Auth
+        $user_id = auth()->user()->id;
+        
+        $user = DB::table('users')
+        ->where('id', $user_id)
+        ->get();
+
+        return view('cms.profile',compact( 'user'));
+    }
+
+    public function changePassWord(Request $request){
+        //get the user id from Auth
+        $user_id = auth()->user()->id;
+        
+        $user = DB::table('users')
+        ->where('id', $user_id)
+        ->get();
+
+        $old_password = $user[0]->password;
+        $new_password = $request->new_password;
+        $confirm_password = $request->confirm_password;
+        
+
+
+        if (Hash::check($request->old_password, $old_password)) {
+            // The passwords match...
+            if($new_password != $confirm_password){
+                return redirect()->back()->with('error', 'New password and confirm password is not match');
+            }
+            if(Hash::check($confirm_password,$old_password)){
+                return redirect()->back()->with('error', 'New password and old password is the same');
+            }
+        }else{
+            return redirect()->back()->with('error', 'Old password is not correct');
+        }
+        // if(Hash::check($request->old_password, $old_password)){
+        //     return redirect()->back()->with('error', 'Old password is not correct');
+        // }
+        // if($new_password != $confirm_password){
+        //     return redirect()->back()->with('error', 'New password and confirm password is not match');
+        // }
+        // if(Hash::check($confirm_password,$old_password)){
+        //     return redirect()->back()->with('error', 'New password and old password is the same');
+        // }
+
+        DB::table('users')
+        ->where('id', $user_id)
+        ->update(['password' => 
+        Hash::make($request->new_password)]);
+
+        return redirect()->back()->with('message', 'Change password successfully');
     }
 }

@@ -31,4 +31,26 @@ class HomeController extends Controller
        
         return view('website.index', compact('news'));
     }
+
+    public function detail($id){
+        $news = DB::table('news')
+        // ->where('is_publish', 1)
+        ->where('news.id', $id)
+        ->get();
+        
+        $images = DB::table('images')
+        ->where('news_id', $id)
+        ->get();
+
+        $temp =[];  
+        foreach ($images as $row) {
+            array_push($temp, $row->image_path);
+        }
+
+        $news[0]->image = $temp;  
+        
+        return view('website.news_detail', compact('news'));
+    }
+
+
 }

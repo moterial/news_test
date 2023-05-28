@@ -1,0 +1,18 @@
+@isset($news)
+            <div class="col-md-9 col-12">
+              <p class="title" style="color:#940521;">{{ $news[0]->title }}</p>
+              <div class="row">
+                <div class="news-content">
+                    <p class="news-title text-center">
+                        <strong><u>{{ $news[0]->title }}</u></strong>
+                    </p>
+                    <p style="" id='news-des'>
+                        @php
+                            echo nl2br(json_decode($news[0]->content));
+                        @endphp
+                    </p>
+
+                </div>     
+              </div>
+            </div>
+            @endisset

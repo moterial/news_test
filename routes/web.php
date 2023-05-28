@@ -19,6 +19,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
      * Home Routes
      */
     Route::get('/', 'HomeController@index')->name('home.index');
+    Route::get('/news_detail/{id}', 'HomeController@detail')->name('news.detail');
 
     Route::group(['middleware' => ['guest']], function() {
         /**
@@ -46,6 +47,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::get('/dashboard/editnews/{id}', 'NewsController@edit')->name('news.edit');
         Route::get('/dashboard/deletenews/{id}', 'NewsController@delete')->name('news.delete');
         Route::post('/dashboard/editnews/{id}', 'NewsController@update')->name('news.update');
+        Route::get('/dashboard/profile', 'DashboardController@profile')->name('profile');
+        Route::post('/dashboard/profile', 'DashboardController@changePassWord')->name('profile.changepw');
 
 
     });

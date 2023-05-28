@@ -74,34 +74,34 @@
                     <li class="nav-item dropdown flex-fill">
                       <a class="nav-link dropdown-toggle" href="" role="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">最新消息 <span class="caret"></span></a>
                       <ul class="dropdown-menu" >
-                        <li><a class="dropdown-item" href="/lst-housing-new-project">樂屋新項目</a></li>
-                        <li><a class="dropdown-item" href="/press-release">新聞發佈</a></li>
+                        <li><a class="dropdown-item" href="/">樂屋新項目</a></li>
+                        <li><a class="dropdown-item" href="/">新聞發佈</a></li>
                       </ul>
                     </li>
                     <li class="nav-item dropdown flex-fill">
-                      <a class="nav-link dropdown-toggle" href="/housing-application" role="button" data-bs-toggle="dropdown" aria-expanded="false">申請樂屋 <span class="caret"></span></a>
+                      <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">申請樂屋 <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/lst-housing-project">樂屋項目</a></li>
-                        <li><a class="dropdown-item" href="/application">申請</a></li>
-                        <li><a class="dropdown-item" href="/faqs">FAQs</a></li>
+                        <li><a class="dropdown-item" href="/">樂屋項目</a></li>
+                        <li><a class="dropdown-item" href="/">申請</a></li>
+                        <li><a class="dropdown-item" href="/">FAQs</a></li>
                       </ul>
                     </li>
                     <li class="nav-item dropdown flex-fill">
-                      <a class="nav-link dropdown-toggle" href="/household-information" role="button" data-bs-toggle="dropdown" aria-expanded="false">劏房戶資訊 <span class="caret"></span></a>
+                      <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">劏房戶資訊 <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/housing-rental-control">劏房租務管制</a></li>
-                        <li><a class="dropdown-item" href="/useful-information">實用資訊</a></li>
+                        <li><a class="dropdown-item" href="/">劏房租務管制</a></li>
+                        <li><a class="dropdown-item" href="/">實用資訊</a></li>
                       </ul>
                     </li>
                     <li class="nav-item dropdown flex-fill">
-                      <a class="nav-link dropdown-toggle" href="/lst-housing-story" role="button" data-bs-toggle="dropdown" aria-expanded="false">樂屋故事 <span class="caret"></span></a>
+                      <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">樂屋故事 <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/story">樂屋故事</a></li>
-                        <li><a class="dropdown-item" href="/about-us">關於樂屋</a></li>
+                        <li><a class="dropdown-item" href="/">樂屋故事</a></li>
+                        <li><a class="dropdown-item" href="/">關於樂屋</a></li>
                       </ul>
                     </li>
                     <li class="nav-item flex-fill">
-                      <a class="nav-link" href="/contact">聯絡我們</a>
+                      <a class="nav-link" href="/">聯絡我們</a>
                     </li>
                   </ul>
                 </div>
@@ -115,7 +115,7 @@
 
     @yield('content')
 
-    <footer class="fixed-bottom bg-light py-3">
+    <footer class="bottom bg-light py-3">
         <div class="container">
           <p class="text-center m-0">Design by Yeung Tsz Wa</p>
         </div>
